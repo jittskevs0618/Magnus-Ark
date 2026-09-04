@@ -1,0 +1,49 @@
+---
+// Plain typographic legal page (04-BUILD-SPEC.md build order, step 8).
+// No legal text was supplied in 03-CONTENT.md for this page, and
+// 05-DEPLOYMENT.md's own pre-launch checklist is explicit: "Privacy notice
+// reviewed against the Data Privacy Act of 2012 — this needs a lawyer, not
+// a template." This page is scaffolded, not drafted — do not fill in real
+// clauses without that legal review.
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Privacy notice — Magnus Ark" description="Magnus Ark's privacy notice.">
+  <section class="legal-page">
+    <div class="container">
+      <h1>Privacy notice</h1>
+      <p class="legal-pending">
+        {"{{TBD: this page is pending review by the client's compliance officer and legal counsel against the Philippine Data Privacy Act of 2012 (Republic Act No. 10173). Do not publish this site without that review — the text below is a placeholder structure only, not approved copy.}}"}
+      </p>
+
+      <h2>What this notice will cover</h2>
+      <p>
+        Once reviewed and approved, this page will describe: what personal
+        data Magnus Ark collects through this site and its platforms, why it
+        is collected, how long it is retained, who it may be shared with,
+        the rights data subjects have under the Data Privacy Act of 2012,
+        and how to exercise them.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal-page {
+    background: var(--ark-paper, #f2f4f9);
+    padding: 6em 0;
+    min-height: 60vh;
+  }
+
+  .legal-page .container {
+    max-width: 760px;
+  }
+
+  .legal-pending {
+    background: #fff;
+    border-left: 3px solid var(--ark-brass, #c9a24a);
+    padding: 20px 24px;
+    font-size: 0.95em;
+    color: #4b4b48;
+  }
+</style>

@@ -1,0 +1,173 @@
+---
+// Navbar, rebuilt on the template's own markup/CSS classes (.navbar,
+// .navbar-fixed-top, .navbar-collapse, .navbar-toggle) so the fixed,
+// hidden-until-scrolled, dark-pill nav from the Envato template renders
+// unchanged. Behavior (collapse toggle, scroll-minify, smooth scroll,
+// back-to-top) is plain vanilla JS here instead of the template's
+// jQuery + Bootstrap.js, so we don't ship either dependency just for this.
+// Absolute-with-hash links so they still work from the legal pages
+// (privacy/terms/responsible-play), which have no matching in-page anchor —
+// the click handler below only intercepts these for a smooth in-page
+// scroll when already on "/"; otherwise it's a normal link to "/#about" etc.
+const links = [
+  { href: "/#about", label: "About" },
+  { href: "/#services", label: "Services" },
+  { href: "/#standards", label: "Standards" },
+  { href: "/#contact", label: "Contact" },
+];
+---
+
+<div class="navbar navbar-fixed-top" id="site-navbar">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" id="nav-toggle" aria-expanded="false" aria-controls="my-nav">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/" id="nav-brand">
+        <!--
+          Per the client's request, this points directly at the raw
+          logo_ma.png lockup (mark + "Magnus Ark" + "Holdings Corp."
+          tagline), uncropped, sized up to 48px so the tagline actually
+          reads — this is the client's explicit call over the
+          cropped/optimized logo.png used previously.
+          The template's navbar is invisible (opacity:0, off-screen) until
+          scrolled, then snaps straight into its light/white "minified"
+          background, which is why the full-color (not reversed) lockup
+          still reads fine here.
+        -->
+        <img class="logo" src="/logo_ma.png" alt="Magnus Ark Holdings Corp." height="48" width="226" />
+      </a>
+    </div>
+    <nav id="my-nav" class="navbar-collapse collapse" role="navigation">
+      <ul class="nav navbar-nav">
+        {links.map((link) => <li data-nav-item={link.href.slice(link.href.indexOf("#") + 1)}><a href={link.href}>{link.label}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<div class="scrolltotop" id="scroll-to-top" role="button" tabindex="0" aria-label="Back to top">
+  <i class="fa fa-chevron-up"></i>
+</div>
+
+<style>
+  /* The template's logo is a stretched placeholder image; ours is a real
+     fixed-height mark and must never be scaled by width (06-ASSETS.md). */
+  .navbar-brand .logo {
+    height: 48px;
+    width: auto;
+  }
+</style>
+
+<script>
+  const navbar = document.getElementById("site-navbar");
+  const toggle = document.getElementById("nav-toggle");
+  const collapse = document.getElementById("my-nav");
+  const scrollTop = document.getElementById("scroll-to-top");
+  const header = document.getElementById("top");
+
+  // Minify the nav once scrolled past the hero, show the back-to-top button.
+  // Pages with no #top hero (privacy/terms/responsible-play) have no
+  // "past the header" scroll point to wait for — show the nav immediately
+  // there, or it stays invisible and unreachable on those pages.
+  let ticking = false;
+  const update = () => {
+    if (!header) {
+      navbar?.classList.add("minified");
+      scrollTop?.classList.toggle("show-to-top", window.scrollY > 200);
+      ticking = false;
+      return;
+    }
+    const past = window.scrollY >= header.offsetHeight - 100;
+    navbar?.classList.toggle("minified", past);
+    scrollTop?.classList.toggle("show-to-top", past);
+    ticking = false;
+  };
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    },
+    { passive: true }
+  );
+  update();
+
+  // Mobile menu toggle (replaces Bootstrap's jQuery-driven collapse).
+  toggle?.addEventListener("click", () => {
+    const isOpen = collapse?.classList.toggle("in");
+    collapse?.classList.toggle("collapse", !isOpen);
+    toggle.setAttribute("aria-expanded", String(Boolean(isOpen)));
+  });
+
+  // Smooth scroll for nav links + brand + back-to-top, closing the mobile
+  // menu on navigation.
+  const smoothScrollTo = (target: HTMLElement) => {
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  document.querySelectorAll<HTMLAnchorElement>(".navbar-nav a").forEach((link) => {
+    link.addEventListener("click", (evt) => {
+      const href = link.getAttribute("href") ?? "";
+      const hashAt = href.indexOf("#");
+      // Only intercept for an in-page smooth scroll when the target section
+      // actually exists on this page — otherwise it's a normal link (e.g.
+      // "/#about" from a legal page navigates to "/" then jumps on load).
+      const targetEl = hashAt >= 0 ? document.querySelector<HTMLElement>(href.slice(hashAt)) : null;
+      if (targetEl) {
+        evt.preventDefault();
+        smoothScrollTo(targetEl);
+      }
+      collapse?.classList.remove("in");
+      collapse?.classList.add("collapse");
+      toggle?.setAttribute("aria-expanded", "false");
+    });
+  });
+
+  // Back-to-top always just scrolls the current page — no navigation.
+  const scrollToTop = (evt: Event) => {
+    evt.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+  scrollTop?.addEventListener("click", scrollToTop);
+  scrollTop?.addEventListener("keydown", (evt) => {
+    if ((evt as KeyboardEvent).key === "Enter" || (evt as KeyboardEvent).key === " ") scrollToTop(evt);
+  });
+
+  // The brand mark links to "/" — on the homepage that's just a scroll to
+  // top (no reload); from a legal page it navigates home normally.
+  document.getElementById("nav-brand")?.addEventListener("click", (evt) => {
+    if (!header) return;
+    scrollToTop(evt);
+  });
+
+  // Scrollspy: highlight the nav item for whichever tracked section is
+  // currently in view (the original template drove this with Bootstrap's
+  // data-spy="scroll" + jQuery; this is the vanilla-JS equivalent). Only
+  // sections with a nav link are tracked — homepage-only, a no-op on the
+  // legal pages since none of these ids exist there.
+  const navItems = Array.from(document.querySelectorAll<HTMLLIElement>("[data-nav-item]"));
+  const tracked = navItems
+    .map((li) => ({ li, section: document.getElementById(li.dataset.navItem ?? "") }))
+    .filter((entry): entry is { li: HTMLLIElement; section: HTMLElement } => Boolean(entry.section));
+
+  if (tracked.length && "IntersectionObserver" in window) {
+    const spy = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const match = tracked.find((t) => t.section === entry.target);
+          if (match && entry.isIntersecting) {
+            navItems.forEach((li) => li.classList.remove("active"));
+            match.li.classList.add("active");
+          }
+        }
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
+    );
+    tracked.forEach(({ section }) => spy.observe(section));
+  }
+</script>

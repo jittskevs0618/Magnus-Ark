@@ -1,0 +1,46 @@
+---
+// Plain typographic legal page (04-BUILD-SPEC.md build order, step 8).
+// No terms text was supplied in 03-CONTENT.md — scaffolded, not drafted.
+// Terms of use for a PAGCOR-regulated entity's corporate site should come
+// from the client's legal counsel, not be invented here.
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Terms — Magnus Ark" description="Magnus Ark's terms of use.">
+  <section class="legal-page">
+    <div class="container">
+      <h1>Terms</h1>
+      <p class="legal-pending">
+        {"{{TBD: this page is pending drafting and review by the client's legal counsel. Do not publish this site without that review — the text below is a placeholder structure only, not approved copy.}}"}
+      </p>
+
+      <h2>What this page will cover</h2>
+      <p>
+        Once reviewed and approved, this page will set out the terms
+        governing use of this website: acceptable use, intellectual
+        property, disclaimers, and the governing law and jurisdiction
+        (Philippines).
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal-page {
+    background: var(--ark-paper, #f2f4f9);
+    padding: 6em 0;
+    min-height: 60vh;
+  }
+
+  .legal-page .container {
+    max-width: 760px;
+  }
+
+  .legal-pending {
+    background: #fff;
+    border-left: 3px solid var(--ark-brass, #c9a24a);
+    padding: 20px 24px;
+    font-size: 0.95em;
+    color: #4b4b48;
+  }
+</style>

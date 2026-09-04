@@ -1,0 +1,85 @@
+---
+// 03-CONTENT.md §5, restyled on the template's `#services`/`.our-service`
+// grid — four capabilities instead of the template's six demo services.
+const services = [
+  {
+    icon: "fa-cogs",
+    title: "Platform technology",
+    body: "We design, build, and administer the gaming systems that licensed platforms run on. This covers core platform architecture, content and payment integrations, system monitoring, release engineering, and the reporting infrastructure that regulatory oversight depends on.",
+  },
+  {
+    icon: "fa-group",
+    title: "Operations",
+    body: "Customer support, account verification, payments processing, and integrity monitoring, staffed and supervised in-house. Our operations teams work to documented procedures with defined escalation paths, and every action against a customer account is logged and reviewable.",
+  },
+  {
+    icon: "fa-bullhorn",
+    title: "Marketing",
+    body: "Brand development, performance marketing, lifecycle and retention programmes, and creative production. All campaign material passes internal compliance review before it runs, so advertising claims stay inside what the regulator permits.",
+  },
+  {
+    icon: "fa-shield",
+    title: "Compliance and player protection",
+    body: "Regulatory reporting, anti-money-laundering procedures, age and identity verification, and responsible play controls. This function reports independently of commercial targets, because a compliance team that answers to revenue is not a compliance team.",
+  },
+];
+---
+
+<section id="services">
+  <div class="diag-divider diag-divider--royal" aria-hidden="true" />
+  <div class="container">
+    <h1 class="section-heading">What we do</h1>
+    <div class="row reveal">
+      <div class="col-md-10 col-md-offset-1">
+        <p>
+          Four capabilities, run by one company. Platforms we support do not
+          have to assemble them from four vendors.
+        </p>
+      </div>
+    </div>
+    <div id="our-service-container" class="services-grid-4">
+      {
+        services.map((s, i) => (
+          <div class="our-service service-column reveal-item" style={{ "--reveal-index": i }}>
+            <figure class="service-icon">
+              <i class={`fa ${s.icon}`} />
+            </figure>
+            <div class="service-content">
+              <h2 class="service-title">{s.title}</h2>
+              <p>{s.body}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+    <div class="clear" />
+  </div>
+</section>
+
+<style>
+  /* Four items instead of the template's six — force a clean 2x2/1-col
+     layout rather than inheriting the six-up float widths. */
+  .services-grid-4 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    max-width: 1000px;
+    margin-inline: auto;
+  }
+
+  @media (min-width: 768px) {
+    .services-grid-4 {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .services-grid-4 .our-service {
+    width: auto;
+    float: none;
+    margin: 0;
+  }
+
+  .service-title {
+    color: #fff;
+  }
+</style>

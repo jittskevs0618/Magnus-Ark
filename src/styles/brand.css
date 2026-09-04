@@ -1,0 +1,356 @@
+/* ============================================================
+   Magnus Ark brand layer — loads AFTER vendor/css/style.css.
+   The template ("Birva Creative Studio") is a generic freelancer
+   portfolio theme; this file re-skins it for a PAGCOR-licensed
+   corporate site: real brand colors (sampled from the supplied
+   logo), self-hosted fonts instead of the template's Google Fonts
+   request, and a handful of structural fixes the vendor CSS needs
+   to behave in a modern, content-driven layout.
+
+   The template's own #F6464A red accent was already replaced with
+   our royal blue directly in the copied style.css (a global find/
+   replace across ~67 declarations) — this file only holds things
+   that need to differ from that blanket swap, plus new rules.
+   ============================================================ */
+
+:root {
+  --ark-hull: #14193f;   /* sampled from the logo's own navy */
+  --ark-royal: #035aa6;  /* sampled from the logo's blue */
+  --ark-paper: #f2f4f9;
+  --ark-white: #ffffff;
+  --ark-brass: #c9a24a;  /* reserved for the credentials band only */
+}
+
+/* ---- Self-hosted fonts (replaces the template's http:// Google Fonts
+   request — self-hosting is faster, avoids a third-party request on a
+   site regulators will load, and works without external network calls) ---- */
+
+@font-face {
+  font-family: "Oswald";
+  src: url("/fonts/Oswald-300.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Oswald";
+  src: url("/fonts/Oswald-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Oswald";
+  src: url("/fonts/Oswald-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Oswald";
+  src: url("/fonts/Oswald-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Oswald";
+  src: url("/fonts/Oswald-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Open Sans";
+  src: url("/fonts/OpenSans-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Open Sans";
+  src: url("/fonts/OpenSans-400-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Open Sans";
+  src: url("/fonts/OpenSans-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Open Sans";
+  src: url("/fonts/OpenSans-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---- Structural fixes ----
+   The template sets body{position:absolute;top:0;left:0;bottom:0} — a
+   2013-era height:100% hack. Nothing in our layout needs it, and it
+   risks fighting normal document flow with our fixed nav + stacked
+   sections, so it's reset to a conventional flow. */
+body {
+  position: static;
+  height: auto;
+  margin: 0;
+}
+
+/* The template's global `img{width:100%}` stretches any image to its
+   container — wrong for the logo, which must stay a fixed, unscaled
+   mark per 06-ASSETS.md ("never scaled by width"). */
+.navbar-brand img,
+.footer-logo img {
+  width: auto;
+  max-width: none;
+}
+
+/* ---- Photography ----
+   Real, freely-licensed photography (Wikimedia Commons, CC BY-SA — credited
+   in the footer), not fabricated "our office/our team" stock photography.
+   Duotoned with the brand gradient per the original asset doc's own
+   guidance ("treated with a royal blue duotone so it sits inside the
+   palette"), so it reads as atmosphere, not as a specific factual claim. */
+.photo-bg {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+@media (max-width: 767px) {
+  .photo-bg {
+    background-attachment: scroll;
+  }
+}
+
+.banner {
+  background-image:
+    linear-gradient(160deg, rgba(20, 25, 63, 0.88) 0%, rgba(3, 90, 166, 0.82) 130%),
+    url("/images/hero-skyline.jpg");
+}
+@media (max-width: 767px) {
+  /* background-attachment:fixed is a known jank/performance cost on
+     mobile Safari and Chrome-for-Android; disable below 768px. */
+  .banner {
+    background-attachment: scroll;
+  }
+}
+
+/* ---- Section backgrounds not covered by the blanket red→royal swap ---- */
+#credentials {
+  background-color: var(--ark-royal);
+}
+#vision-mission,
+#contact,
+.footer {
+  background-color: var(--ark-hull);
+}
+#scale {
+  background-color: var(--ark-paper);
+}
+
+/* ---- Credentials band: the one section that uses brass, per
+   02-DESIGN-SYSTEM.md's original brass rule — kept even through the
+   template pivot since it's a compliance/credibility marker, not a
+   decorative accent. ---- */
+#credentials .credential-rule {
+  border-top: 2px solid var(--ark-brass);
+}
+
+/* ---- Accessibility: the template has no visible focus state ---- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--ark-royal);
+  outline-offset: 2px;
+}
+
+/* Sentence case for buttons — matches how 03-CONTENT.md's copy is
+   written ("Send enquiry"), overriding the template's uppercase btn text
+   only where we render our own labels via .btn-sentence. */
+.btn-sentence {
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+/* ============================================================
+   Beautification pass — the "~ Title ~" tilde convention and flat
+   single-color bands are the template's most dated-looking traits;
+   everything below targets those without touching the underlying
+   Bootstrap/FA structure.
+   ============================================================ */
+
+/* Section headings: dropped the tilde decoration for a plain heading +
+   a short accent underline that inherits the surrounding text color
+   (brass/white on dark bands, royal on light ones), giving every
+   section a consistent anchor point instead of "~ Title ~". */
+.section-heading {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 0.4em;
+}
+.section-heading::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 3px;
+  margin: 20px auto 0;
+  background: currentColor;
+  opacity: 0.4;
+}
+#about .section-heading,
+#scale .section-heading {
+  color: var(--ark-royal);
+}
+
+/* Diagonal sheen on the flat solid-color bands so they read as a
+   surface catching light rather than a single flat fill. */
+#credentials,
+#vision-mission,
+#standards,
+#services {
+  position: relative;
+  isolation: isolate;
+}
+#credentials::before,
+#vision-mission::before,
+#standards::before,
+#services::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, transparent 45%),
+    radial-gradient(ellipse at 15% 0%, rgba(255, 255, 255, 0.08) 0%, transparent 55%);
+  pointer-events: none;
+}
+#credentials > .container,
+#vision-mission > .container,
+#standards > .container,
+#services > .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Icon badges (services, scale, standards): a soft shadow so the white
+   circles lift off their background instead of sitting flush. */
+.service-icon,
+.icon-badge {
+  box-shadow: 0 10px 30px rgba(3, 25, 60, 0.25);
+}
+
+/* Service cards: hover lift + shadow instead of the flat border-fade. */
+#services .service-column {
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  transition: transform 0.25s ease-out, box-shadow 0.25s ease-out, background 0.25s ease-out;
+}
+#services .service-column:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(3, 15, 40, 0.25);
+}
+
+/* Buttons: a tactile lift on hover/focus instead of a flat color swap. */
+.btn-outline-white {
+  transition: color 0.2s ease-out, background-color 0.2s ease-out, transform 0.2s ease-out,
+    box-shadow 0.2s ease-out;
+}
+.btn-outline-white:hover,
+.btn-outline-white:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Standards: icon badges to match the circular treatment used in
+   Services/Scale, instead of a bare inline glyph. */
+.standards-item .icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #fff;
+  margin-bottom: 16px;
+}
+.standards-item .icon-badge i {
+  color: var(--ark-brass);
+  font-size: 22px;
+}
+
+/* ---- Scroll reveal ----
+   Content fades/slides up into place as it enters the viewport. Disabled
+   for prefers-reduced-motion, and elements render fully visible with no
+   JS (progressive enhancement, not a load-bearing effect).
+
+   .reveal-item is the same effect but staggered via --reveal-index (set
+   inline per card/figure in a grid) so a row of cards cascades in one
+   after another instead of popping in as a single block. */
+.reveal,
+.reveal-item {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-item {
+  transition-delay: calc(var(--reveal-index, 0) * 110ms);
+}
+.reveal.in-view,
+.reveal-item.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---- Nav scrollspy ----
+   Highlights the link for the section currently in view, reusing the
+   template's own .active treatment (it already styles this — the
+   original template drove it with Bootstrap's data-spy="scroll" +
+   jQuery, dropped along with the rest of that stack; this is the
+   vanilla-JS equivalent, set in Nav.astro). */
+
+/* ---- Diagonal section dividers ----
+   Replaces flat, hard color seams at a few key boundaries with an
+   angled cut — the same "this section's color rises into the one above
+   it" idea as the original arc motif, just a straight diagonal instead
+   of a curve, to match this template's squarer, more geometric character.
+   Only used where two genuinely different flat colors meet; skipped at
+   the photo band's edges (a clean rectangular insert reads better there)
+   and between Services/Standards, which share the same royal fill. */
+.diag-divider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  transform: translateY(-100%);
+  clip-path: polygon(0 100%, 100% 0, 100% 100%);
+  pointer-events: none;
+  z-index: 4;
+}
+@media (max-width: 767px) {
+  .diag-divider {
+    height: 36px;
+  }
+}
+.diag-divider--paper {
+  background: var(--ark-paper);
+}
+.diag-divider--royal {
+  background: var(--ark-royal);
+}
+.diag-divider--hull {
+  background: var(--ark-hull);
+}

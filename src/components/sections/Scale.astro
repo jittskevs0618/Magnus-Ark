@@ -1,0 +1,46 @@
+---
+// 03-CONTENT.md §7, restyled on the template's `.statistics` counter row.
+// Every figure is a client-supplied placeholder — no animated count-up
+// (nothing to count up to yet); per 03-CONTENT.md, delete this section
+// entirely if real figures never arrive before launch.
+const figures = [
+  { icon: "fa-group", value: "{{TBD}}", label: "People across technology, operations, and marketing" },
+  { icon: "fa-desktop", value: "{{TBD}}", label: "Platforms under administration" },
+  { icon: "fa-clock-o", value: "{{TBD}}", label: "Operations coverage" },
+  { icon: "fa-building", value: "{{TBD}}", label: "Offices" },
+];
+---
+
+<section id="scale" class="statistics">
+  <div class="container">
+    <h1 class="section-heading">The company today</h1>
+    <div class="row">
+      {
+        figures.map((f, i) => (
+          <div class="col-sm-3 reveal-item" style={{ "--reveal-index": i }}>
+            <h1 class="big">
+              <i class={`fa ${f.icon}`} />
+              <span class="scale-value">{f.value}</span>{" "}
+              <span class="desc">{f.label}</span>
+            </h1>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  #scale {
+    background-color: var(--ark-paper, #f2f4f9);
+    padding: 6em 0;
+  }
+
+  #scale .big {
+    color: var(--ark-hull);
+  }
+
+  .scale-value {
+    font-size: 1em;
+  }
+</style>

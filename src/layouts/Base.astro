@@ -1,0 +1,99 @@
+---
+// Base layout. Nav and Footer render on every page so the legal pages
+// (privacy, terms, responsible-play) stay consistent with index.
+//
+// Visual system as of this pass: reworked from the "Birva Creative Studio"
+// Envato template (Bootstrap 3 + Font Awesome + Oswald/Open Sans), per the
+// client's request to pivot away from the original arc-based design system.
+// Vendor CSS lives in public/vendor/ and is linked directly (its font-face
+// url()s and any relative asset paths resolve correctly that way); brand.css
+// is the Magnus Ark re-skin layer on top of it.
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/brand.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Magnus Ark — PAGCOR-licensed Gaming System Administrator",
+  description = "Magnus Ark is a Philippine corporation licensed and approved by PAGCOR as a Gaming System Administrator, providing platform technology, operations, and marketing services to regulated digital entertainment.",
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--
+      06-ASSETS.md calls for SVG + 180px PNG; only a raster lockup was
+      supplied (no vector source), so this is PNG-only for now. Swap in an
+      SVG mark here if/when a vector export exists.
+    -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/og.jpg" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Vendor CSS from the template, in cascade order. -->
+    <link rel="stylesheet" href="/vendor/css/bootstrap.css" />
+    <link rel="stylesheet" href="/vendor/css/font-awesome.css" />
+    <link rel="stylesheet" href="/vendor/css/style.css" />
+
+    <!-- Above-the-fold weights only: Oswald 600 (headings), Open Sans 400 (body). -->
+    <link rel="preload" href="/fonts/Oswald-600.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/OpenSans-400.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- If JS never runs, .reveal/.reveal-item content must not stay invisible forever. -->
+    <noscript>
+      <style>
+        .reveal,
+        .reveal-item {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style>
+    </noscript>
+  </head>
+  <body>
+    <Nav />
+    <slot />
+    <Footer />
+    <script>
+      // Scroll reveal for .reveal/.reveal-item elements — see brand.css.
+      // Progressive enhancement only: without JS or under
+      // prefers-reduced-motion, this content is already fully visible.
+      const els = document.querySelectorAll<HTMLElement>(".reveal, .reveal-item");
+      if (els.length && "IntersectionObserver" in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("in-view");
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
+        );
+        els.forEach((el) => io.observe(el));
+      } else {
+        els.forEach((el) => el.classList.add("in-view"));
+      }
+    </script>
+  </body>
+</html>

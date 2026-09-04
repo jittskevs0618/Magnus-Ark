@@ -1,0 +1,21 @@
+# build output
+dist/
+.astro/
+
+# the raw Envato template purchase — already mined for what we needed
+# (public/vendor/, public/images/); not something to redistribute via git
+Birva-03-Slider Theme/
+
+# dependencies
+node_modules/
+
+# environment
+.env
+.env.production
+
+# macOS
+.DS_Store
+
+# editor
+.vscode/*
+!.vscode/extensions.json

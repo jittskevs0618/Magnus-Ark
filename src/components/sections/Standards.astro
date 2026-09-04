@@ -1,0 +1,77 @@
+---
+// 03-CONTENT.md §6. The template's "Our Process" is a one-at-a-time
+// flexslider (Plan/Design/Build/Launch) — wrong shape for four commitments
+// that need to read simultaneously, so this borrows its icon+heading
+// typographic treatment but lays out as a static 2x2 grid, no slider JS.
+const standards = [
+  {
+    icon: "fa-gavel",
+    lead: "We hold the license, so we hold the responsibility.",
+    rest: "Regulatory obligations sit with us directly. They are not delegated to a vendor and they are not treated as somebody else's paperwork.",
+  },
+  {
+    icon: "fa-shield",
+    lead: "Player protection is a design constraint.",
+    rest: "Age verification, spend controls, self-exclusion, and activity monitoring are built into the platform layer. They cannot be switched off for a promotion.",
+  },
+  {
+    icon: "fa-lock",
+    lead: "Data stays where it should.",
+    rest: "Customer records are held under Philippine data privacy law with access controls, retention limits, and audit logging on every read.",
+  },
+  {
+    icon: "fa-user",
+    lead: "We hire Filipino and we train deep.",
+    rest: "The specialist skills this sector needs — platform engineering, payments integrity, regulatory operations — are built here rather than imported.",
+  },
+];
+---
+
+<section id="standards">
+  <div class="container">
+    <h1 class="section-heading">How we work</h1>
+    <div class="row standards-grid">
+      {
+        standards.map((s, i) => (
+          <div class="col-sm-6 standards-item reveal-item" style={{ "--reveal-index": i }}>
+            <span class="icon-badge">
+              <i class={`fa ${s.icon}`} />
+            </span>
+            <h3 class="standards-lead">{s.lead}</h3>
+            <p>{s.rest}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  #standards {
+    background-color: var(--ark-royal);
+    color: #fff;
+    text-align: center;
+    padding: 6em 0;
+  }
+
+  .standards-grid {
+    margin-top: 40px;
+  }
+
+  .standards-item {
+    padding: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .standards-lead {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .standards-item p {
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 52ch;
+    margin-inline: auto;
+  }
+</style>

@@ -1,0 +1,20 @@
+---
+// 06-ASSETS.md's own suggestion, carried over from the original design
+// pass: "the one place [photography] earns its keep is a full-bleed band
+// between the standards and scale sections." No real operations-floor
+// photo exists, so this uses a generic, freely-licensed data center photo
+// (credited in the footer) rather than a fabricated "our office" claim —
+// purely atmospheric, no caption asserting anything about Magnus Ark
+// specifically.
+---
+
+<div class="photo-band photo-bg reveal" role="presentation" aria-hidden="true"></div>
+
+<style>
+  .photo-band {
+    height: clamp(220px, 32vw, 420px);
+    background-image:
+      linear-gradient(90deg, rgba(3, 90, 166, 0.55) 0%, rgba(20, 25, 63, 0.55) 100%),
+      url("/images/datacenter.jpg");
+  }
+</style>
