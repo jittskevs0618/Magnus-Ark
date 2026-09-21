@@ -1,6 +1,6 @@
 ---
 // Base layout. Nav and Footer render on every page so the legal pages
-// (privacy, terms, responsible-play) stay consistent with index.
+// (privacy, terms) stay consistent with index.
 //
 // Visual system as of this pass: reworked from the "Birva Creative Studio"
 // Envato template (Bootstrap 3 + Font Awesome + Oswald/Open Sans), per the
@@ -18,8 +18,8 @@ interface Props {
 }
 
 const {
-  title = "Magnus Ark — PAGCOR-licensed Gaming System Administrator",
-  description = "Magnus Ark is a Philippine corporation licensed and approved by PAGCOR as a Gaming System Administrator, providing platform technology, operations, and marketing services to regulated digital entertainment.",
+  title = "Magnus Ark — Corporate technology company",
+  description = "Magnus Ark is a Philippine technology company providing platform technology, operations, and marketing services to online entertainment and gaming businesses.",
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);

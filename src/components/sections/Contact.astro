@@ -1,10 +1,9 @@
 ---
-// 03-CONTENT.md §8, restyled on the template's `#contact` section. The
-// template's form posts to a PHP mailer, which doesn't run on Vercel;
-// per 04-BUILD-SPEC.md, until the Supabase-backed API route is wired up
-// the form renders disabled with a mailto: fallback beneath it, rather
-// than a form that silently fails.
-const enquiryTypes = ["Partnership", "Regulatory", "Supplier", "Careers", "Press", "Other"];
+// Email-only contact, per the client: no address, no phone, and no form.
+// (The template's form posted to a PHP mailer, which doesn't run on Vercel,
+// and the disabled placeholder form that replaced it looked unfinished on a
+// live site. A form can be added back later if it gets a working backend.)
+const email = "inquiry@magnusark.ph";
 ---
 
 <section id="contact" class="photo-bg contact-photo">
@@ -13,67 +12,15 @@ const enquiryTypes = ["Partnership", "Regulatory", "Supplier", "Careers", "Press
     <h1 class="section-heading">Talk to us</h1>
     <div class="row reveal">
       <div class="col-sm-10 col-sm-offset-1">
-        <p>For partnership, regulatory, supplier, and press enquiries.</p>
+        <p>For partnership, supplier, and press enquiries.</p>
       </div>
     </div>
 
-    <div class="row contact-meta-row">
-      <div class="col-sm-4 reveal-item" style={{ "--reveal-index": 0 }}>
-        <div class="icon">A</div>
-        <p class="contact-meta">{"{{TBD: registered office address}}"}</p>
-      </div>
-      <div class="col-sm-4 reveal-item" style={{ "--reveal-index": 1 }}>
-        <div class="icon">E</div>
-        <p class="contact-meta">{"{{TBD: email}}"}</p>
-      </div>
-      <div class="col-sm-4 reveal-item" style={{ "--reveal-index": 2 }}>
-        <div class="icon">P</div>
-        <p class="contact-meta">{"{{TBD: phone}}"}</p>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2" id="contact-form">
-        <form aria-describedby="contact-disabled-note">
-          <fieldset disabled>
-            <div class="row">
-              <div class="col-sm-6 form-field">
-                <label for="cm-name">Full name</label>
-                <input class="form-control" type="text" name="cm-name" id="cm-name" />
-              </div>
-              <div class="col-sm-6 form-field">
-                <label for="cm-email">Work email</label>
-                <input class="form-control" type="email" name="cm-email" id="cm-email" />
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-6 form-field">
-                <label for="cm-org">Organisation</label>
-                <input class="form-control" type="text" name="cm-org" id="cm-org" />
-              </div>
-              <div class="col-sm-6 form-field">
-                <label for="cm-type">Enquiry type</label>
-                <select class="form-control" name="cm-type" id="cm-type">
-                  {enquiryTypes.map((t) => <option>{t}</option>)}
-                </select>
-              </div>
-            </div>
-            <div class="form-field">
-              <label for="comments">Message</label>
-              <textarea class="_message" id="comments" name="comments" rows="5" />
-            </div>
-            <div class="form-group">
-              <button type="submit" name="submit" class="btn btn-outline-white btn-big btn-sentence">
-                Send enquiry
-              </button>
-            </div>
-          </fieldset>
-        </form>
-        <p id="contact-disabled-note" class="contact-disabled-note">
-          The enquiry form is not wired up yet — email us directly instead:
-          {" "}<a href="mailto:{{TBD: email}}">{"{{TBD: email}}"}</a>
-        </p>
-      </div>
+    <div class="contact-email reveal">
+      <span class="contact-email__badge" aria-hidden="true">
+        <i class="fa fa-envelope"></i>
+      </span>
+      <a class="contact-email__link" href={`mailto:${email}`}>{email}</a>
     </div>
   </div>
 </section>
@@ -89,39 +36,46 @@ const enquiryTypes = ["Partnership", "Regulatory", "Supplier", "Careers", "Press
       url("/images/contact-sunset.jpg");
   }
 
-  #contact-form fieldset {
-    border: 0;
-    padding: 0;
-    margin: 0;
-    opacity: 0.55;
+  .contact-email {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
   }
 
-  .form-field {
-    text-align: left;
-    margin-bottom: 20px;
+  .contact-email__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(3, 25, 60, 0.35);
   }
 
-  .form-field label {
-    display: block;
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 0.85em;
-    margin-bottom: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+  .contact-email__badge .fa {
+    color: var(--ark-royal, #035aa6);
+    font-size: 28px;
   }
 
-  .contact-meta-row {
-    margin-bottom: 40px;
-  }
-
-  .contact-disabled-note {
-    margin-top: 16px;
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 0.95em;
-  }
-
-  .contact-disabled-note a {
+  .contact-email__link {
+    font-family: "Oswald", sans-serif;
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    font-weight: 500;
+    letter-spacing: 0.01em;
     color: #fff;
-    text-decoration: underline;
+    text-decoration: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.35);
+    padding-bottom: 4px;
+    overflow-wrap: anywhere;
+    transition: border-color 0.2s ease-out, color 0.2s ease-out;
+  }
+
+  .contact-email__link:hover,
+  .contact-email__link:focus-visible {
+    color: #fff;
+    border-bottom-color: #fff;
   }
 </style>

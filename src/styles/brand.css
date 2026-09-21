@@ -1,8 +1,8 @@
 /* ============================================================
    Magnus Ark brand layer — loads AFTER vendor/css/style.css.
    The template ("Birva Creative Studio") is a generic freelancer
-   portfolio theme; this file re-skins it for a PAGCOR-licensed
-   corporate site: real brand colors (sampled from the supplied
+   portfolio theme; this file re-skins it for a corporate technology
+   company site: real brand colors (sampled from the supplied
    logo), self-hosted fonts instead of the template's Google Fonts
    request, and a handful of structural fixes the vendor CSS needs
    to behave in a modern, content-driven layout.
@@ -18,12 +18,12 @@
   --ark-royal: #035aa6;  /* sampled from the logo's blue */
   --ark-paper: #f2f4f9;
   --ark-white: #ffffff;
-  --ark-brass: #c9a24a;  /* reserved for the credentials band only */
+  --ark-brass: #c9a24a;  /* small accent: footer rule, standards icons */
 }
 
 /* ---- Self-hosted fonts (replaces the template's http:// Google Fonts
-   request — self-hosting is faster, avoids a third-party request on a
-   site regulators will load, and works without external network calls) ---- */
+   request — self-hosting is faster, avoids a third-party request, and
+   works without external network calls) ---- */
 
 @font-face {
   font-family: "Oswald";
@@ -141,24 +141,10 @@ body {
 }
 
 /* ---- Section backgrounds not covered by the blanket red→royal swap ---- */
-#credentials {
-  background-color: var(--ark-royal);
-}
 #vision-mission,
 #contact,
 .footer {
   background-color: var(--ark-hull);
-}
-#scale {
-  background-color: var(--ark-paper);
-}
-
-/* ---- Credentials band: the one section that uses brass, per
-   02-DESIGN-SYSTEM.md's original brass rule — kept even through the
-   template pivot since it's a compliance/credibility marker, not a
-   decorative accent. ---- */
-#credentials .credential-rule {
-  border-top: 2px solid var(--ark-brass);
 }
 
 /* ---- Accessibility: the template has no visible focus state ---- */
@@ -188,7 +174,7 @@ select:focus-visible {
 
 /* Section headings: dropped the tilde decoration for a plain heading +
    a short accent underline that inherits the surrounding text color
-   (brass/white on dark bands, royal on light ones), giving every
+   (white on dark bands, royal on light ones), giving every
    section a consistent anchor point instead of "~ Title ~". */
 .section-heading {
   position: relative;
@@ -204,21 +190,18 @@ select:focus-visible {
   background: currentColor;
   opacity: 0.4;
 }
-#about .section-heading,
-#scale .section-heading {
+#about .section-heading {
   color: var(--ark-royal);
 }
 
 /* Diagonal sheen on the flat solid-color bands so they read as a
    surface catching light rather than a single flat fill. */
-#credentials,
 #vision-mission,
 #standards,
 #services {
   position: relative;
   isolation: isolate;
 }
-#credentials::before,
 #vision-mission::before,
 #standards::before,
 #services::before {
@@ -230,7 +213,6 @@ select:focus-visible {
     radial-gradient(ellipse at 15% 0%, rgba(255, 255, 255, 0.08) 0%, transparent 55%);
   pointer-events: none;
 }
-#credentials > .container,
 #vision-mission > .container,
 #standards > .container,
 #services > .container {
@@ -238,7 +220,7 @@ select:focus-visible {
   z-index: 1;
 }
 
-/* Icon badges (services, scale, standards): a soft shadow so the white
+/* Icon badges (services, standards): a soft shadow so the white
    circles lift off their background instead of sitting flush. */
 .service-icon,
 .icon-badge {

@@ -6,7 +6,7 @@
 // back-to-top) is plain vanilla JS here instead of the template's
 // jQuery + Bootstrap.js, so we don't ship either dependency just for this.
 // Absolute-with-hash links so they still work from the legal pages
-// (privacy/terms/responsible-play), which have no matching in-page anchor —
+// (privacy/terms), which have no matching in-page anchor —
 // the click handler below only intercepts these for a smooth in-page
 // scroll when already on "/"; otherwise it's a normal link to "/#about" etc.
 const links = [
@@ -69,7 +69,7 @@ const links = [
   const header = document.getElementById("top");
 
   // Minify the nav once scrolled past the hero, show the back-to-top button.
-  // Pages with no #top hero (privacy/terms/responsible-play) have no
+  // Pages with no #top hero (privacy/terms) have no
   // "past the header" scroll point to wait for — show the nav immediately
   // there, or it stays invisible and unreachable on those pages.
   let ticking = false;

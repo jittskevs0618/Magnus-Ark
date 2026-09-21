@@ -1,13 +1,10 @@
 ---
-// 03-CONTENT.md §9, restyled on the template's `.footer` band. The
-// template's footer is a bare logo + social icons + one line; ours carries
-// the compliance-required regulatory line, legal links, age statement, and
-// copyright, so the layout is necessarily fuller than the template default.
+// Restyled on the template's `.footer` band: logo, legal links, copyright,
+// and photo credits. No licensing/regulator line and no age statement —
+// Magnus Ark is presented as a corporate technology company only.
 //
-// Entity name: 03-CONTENT.md says "Magnus Ark Inc." verbatim, but the
-// supplied logo lockup reads "Magnus Ark Holdings Corp." — confirmed with
-// the client that Holdings Corp. is the correct registered name, so the
-// two lines below intentionally diverge from the content doc's literal text.
+// Entity name: the supplied logo lockup reads "Magnus Ark Holdings Corp.",
+// confirmed with the client as the correct registered name.
 ---
 
 <div class="footer">
@@ -16,45 +13,28 @@
       <img src="/logo-white.png" alt="Magnus Ark" height="32" width="208" loading="lazy" />
     </div>
 
-    <p class="footer-reg">
-      Magnus Ark Holdings Corp. Licensed and regulated by the Philippine
-      Amusement and Gaming Corporation.
-    </p>
-
     <nav class="footer-links" aria-label="Legal">
       <a href="/privacy">Privacy notice</a>
       <span aria-hidden="true">·</span>
       <a href="/terms">Terms</a>
-      <span aria-hidden="true">·</span>
-      <a href="/responsible-play">Responsible play</a>
     </nav>
-
-    <!--
-      Verbatim from 03-CONTENT.md §9. The doc is explicit that this exact
-      wording and the exclusion categories must be confirmed with the
-      client's compliance officer before launch — do not edit this string
-      without that sign-off, regardless of what prompted the edit.
-    -->
-    <p class="footer-age">
-      The platforms we support are restricted to persons 21 years and older.
-      Government employees, military personnel, and persons on the national
-      exclusion list are prohibited from participating.
-    </p>
 
     <p class="footer-copyright">© 2026 Magnus Ark Holdings Corp. All rights reserved.</p>
 
     <!--
       CC BY-SA requires attribution "in a manner reasonable to the medium" —
-      these three background photos (hero, the band above Scale, Contact)
+      these three background photos (hero, the band above Contact, Contact)
       are real photography from Wikimedia Commons, not fabricated
-      "our office" claims. Credited here rather than removed on request;
-      keep this block if any of those three images stay in use.
+      "our office" claims. Keep this block while any of those three images
+      stay in use.
     -->
     <p class="footer-photo-credit">
-      Photography: <a href="https://commons.wikimedia.org/wiki/File:Bonifacio_Global_City_Skyline.jpg" target="_blank" rel="noopener noreferrer">Lawrence Ruiz</a>,
-      <a href="https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg" target="_blank" rel="noopener noreferrer">BalticServers.com</a>,
-      <a href="https://commons.wikimedia.org/wiki/File:View_from_Grand_Hyatt_Manila_overlooking_Bonifacio_Global_City_and_Makati_skylines_at_sunset.jpg" target="_blank" rel="noopener noreferrer">Mickeyeva</a>
-      — Wikimedia Commons, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA</a>.
+      Photography:{" "}
+      <a href="https://commons.wikimedia.org/wiki/File:Bonifacio_Global_City_Skyline.jpg" target="_blank" rel="noopener noreferrer">Lawrence Ruiz</a>,{" "}
+      <a href="https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg" target="_blank" rel="noopener noreferrer">BalticServers.com</a>,{" "}
+      <a href="https://commons.wikimedia.org/wiki/File:View_from_Grand_Hyatt_Manila_overlooking_Bonifacio_Global_City_and_Makati_skylines_at_sunset.jpg" target="_blank" rel="noopener noreferrer">Mickeyeva</a>{" "}
+      via Wikimedia Commons,{" "}
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA</a>.
     </p>
   </div>
 </div>
@@ -68,14 +48,6 @@
 
   .footer-logo {
     margin-bottom: 24px;
-  }
-
-  .footer-reg,
-  .footer-age,
-  .footer-copyright {
-    color: rgba(255, 255, 255, 0.8);
-    max-width: 62ch;
-    margin-inline: auto;
   }
 
   .footer-links {
@@ -96,15 +68,11 @@
     margin: 0 8px;
   }
 
-  .footer-age {
-    font-size: 0.85em;
-    margin-top: 24px;
-  }
-
   .footer-copyright {
-    font-size: 0.85em;
-    margin-top: 16px;
     color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85em;
+    margin: 16px auto 0;
+    max-width: 62ch;
   }
 
   .footer-photo-credit {
